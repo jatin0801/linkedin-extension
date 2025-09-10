@@ -1,0 +1,22 @@
+{
+    "manifest_version": 3,
+    "name": "LinkedIn Connect Exporter",
+    "version": "1.0",
+    "background": {
+      "service_worker": "background.js"
+    },
+    "permissions": ["storage", "downloads", "activeTab"],
+    "host_permissions": ["https://www.linkedin.com/*"],
+    "content_scripts": [
+      {
+        "matches": ["https://www.linkedin.com/*"],
+        "js": ["lib/xlsx.full.min.js", "content.js"]
+      }
+    ],
+    "web_accessible_resources": [
+      {
+        "resources": ["lib/xlsx.full.min.js"],
+        "matches": ["https://www.linkedin.com/*"]
+      }
+    ]
+}
