@@ -1,7 +1,15 @@
 {
     "manifest_version": 3,
-    "name": "LinkedIn Connect Exporter",
+    "name": "LinkUp: LinkedIn Connect Exporter",
     "version": "1.0",
+    "description": "Export LinkedIn connections to Google Sheets",
+    "author": "Jatin Chhabria",
+    "icons": {
+      "16": "icons/icon16.png",
+      "32": "icons/icon32.png",
+      "48": "icons/icon48.png",
+      "128": "icons/icon128.png"
+    },
     "background": {
       "service_worker": "background.js"
     },
@@ -21,7 +29,7 @@
     ],
     "action": {
       "default_popup": "popup.html",
-      "default_title": "LinkedIn Connect Exporter"
+      "default_title": "LinkUp:LinkedIn Connect Exporter"
     },
     "oauth2": {
       "client_id": "945762314881-pnhupiu0kqh3suo1ns5pro9v2bmr2ed6.apps.googleusercontent.com",
