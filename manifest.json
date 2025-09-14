@@ -5,8 +5,8 @@
     "background": {
       "service_worker": "background.js"
     },
-    "permissions": ["storage", "downloads", "activeTab"],
-    "host_permissions": ["https://www.linkedin.com/*"],
+    "permissions": ["storage", "downloads", "activeTab", "identity"],
+    "host_permissions": ["https://www.linkedin.com/*", "https://sheets.googleapis.com/*"],
     "content_scripts": [
       {
         "matches": ["https://www.linkedin.com/*"],
@@ -18,5 +18,13 @@
         "resources": ["lib/xlsx.full.min.js"],
         "matches": ["https://www.linkedin.com/*"]
       }
-    ]
+    ],
+    "action": {
+      "default_popup": "popup.html",
+      "default_title": "LinkedIn Connect Exporter"
+    },
+    "oauth2": {
+      "client_id": "945762314881-pnhupiu0kqh3suo1ns5pro9v2bmr2ed6.apps.googleusercontent.com",
+      "scopes": ["https://www.googleapis.com/auth/spreadsheets"]
+    }
 }

@@ -53,8 +53,8 @@ function injectPopup(targetBtn, name, headline) {
     const cancelButtonBg = isDarkMode ? '#4a5568' : '#666';
     
     popup.innerHTML = `
-        <div style="margin-bottom: 12px; font-weight: bold; color: ${borderColor};">
-            Log Connection: ${name}
+        <div style="margin-bottom: 10px; font-weight: bold; font-size: 16px; color: ${borderColor};">
+            Connection: ${name}
         </div>
         <div style="margin-bottom: 8px; font-size: 14px; color: ${subtitleColor};">
             ${headline}
@@ -142,7 +142,10 @@ function extractProfileInfo(btn) {
                        btn.closest('[data-view-name="profile-component-entity"]') || // Recommendations
                        btn.closest('.pvs-entity') || // Entity cards
                        btn.closest('.discover-entity-type-card--mini-card') || // Discover mini cards
-                       btn.closest('.artdeco-card'); // General card container
+                       btn.closest('.artdeco-card') || // General card container
+                       btn.closest('.fb04fdf9._097299df.b49ca3c4._4551b589') || // Network tab recommendations container
+                       btn.closest('._4a88fdf8._0c0ea685._12403c90._3d196115') || // Recommendation section listitem
+                       btn.closest('[role="listitem"]'); // General listitem container
     
     console.log('Profile card found for this specific button:', profileCard);
     
@@ -165,15 +168,24 @@ function extractProfileInfo(btn) {
             '.display-flex.align-items-center .hoverable-link-text.t-bold span', // Alternative recommendations
             '.optional-action-target-wrapper .hoverable-link-text.t-bold', // Recommendations wrapper
             '.discover-person-card__name', // Discover mini cards name
-            '.discover-person-card__name.t-14.t-black.t-bold' // Specific discover card name
+            '.discover-person-card__name.t-14.t-black.t-bold', // Specific discover card name
+            '.fa0e7f7d', // Network tab recommendations name (screen reader text)
+            'span.fa0e7f7d', // Alternative network tab name selector
+            'p._4d766506._1c3a0067 span.fa0e7f7d', // Full network tab name path
+            'p[class*="_4d766506"] span[class*="fa0e7f7d"]' // Flexible network tab name selector
         ];
         
         for (const selector of nameSelectors) {
             const nameElement = profileCard.querySelector(selector);
             if (nameElement?.textContent?.trim()) {
-                name = nameElement.textContent.trim();
-                console.log(`Found name using selector "${selector}": ${name}`);
-                break;
+                let extractedName = nameElement.textContent.trim();
+                // Clean up name - remove Premium, Verified badges and other suffixes
+                extractedName = extractedName.replace(/,\s*(Premium|Verified)$/i, '').trim();
+                if (extractedName && extractedName !== 'Unknown') {
+                    name = extractedName;
+                    console.log(`Found name using selector "${selector}": ${name}`);
+                    break;
+                }
             }
         }
         
@@ -191,7 +203,11 @@ function extractProfileInfo(btn) {
             '.t-14.t-normal .zanUwphmkGFHvxPZgiawLOdktecpOOqdQWc span', // Alternative recommendations headline
             '.full-width.t-14.t-normal span[aria-hidden="true"]', // Recommendations job title
             '.discover-person-card__occupation--mini-card', // Discover mini cards occupation
-            '.discover-person-card__occupation--mini-card.t-12.t-black--light.t-normal' // Specific discover card occupation
+            '.discover-person-card__occupation--mini-card.t-12.t-black--light.t-normal', // Specific discover card occupation
+            'p._4d766506._36b2a045._61f805c8', // Network tab recommendations headline
+            'p[class*="_4d766506"][class*="_36b2a045"]', // Flexible network tab headline selector
+            'p._4d766506._36b2a045', // Simplified network tab headline
+            '.eaea9413 p._4d766506._36b2a045' // Network tab headline with parent context
         ];
         
         for (const selector of headlineSelectors) {

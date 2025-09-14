@@ -1,13 +1,146 @@
 <!DOCTYPE html>
 <html>
 <head>
+    <meta charset="utf-8">
     <style>
-        body { width: 300px; padding: 16px; }
-        .header { font-weight: bold; margin-bottom: 12px; }
+        body {
+            width: 350px;
+            padding: 16px;
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+            font-size: 14px;
+            line-height: 1.4;
+        }
+        .header {
+            font-weight: bold;
+            font-size: 16px;
+            margin-bottom: 16px;
+            color: #0073b1;
+        }
+        .section {
+            margin-bottom: 16px;
+            padding-bottom: 16px;
+            border-bottom: 1px solid #eee;
+        }
+        .section:last-child {
+            border-bottom: none;
+            margin-bottom: 0;
+        }
+        .setting-group {
+            margin-bottom: 12px;
+        }
+        label {
+            display: block;
+            font-weight: 500;
+            margin-bottom: 4px;
+            color: #333;
+        }
+        input[type="text"], input[type="url"] {
+            width: 100%;
+            padding: 8px;
+            border: 1px solid #ddd;
+            border-radius: 4px;
+            font-size: 14px;
+            box-sizing: border-box;
+        }
+        button {
+            background: #0073b1;
+            color: white;
+            border: none;
+            padding: 8px 16px;
+            border-radius: 4px;
+            cursor: pointer;
+            font-size: 14px;
+            margin-right: 8px;
+        }
+        button:hover {
+            background: #005885;
+        }
+        button.secondary {
+            background: #666;
+        }
+        button.secondary:hover {
+            background: #555;
+        }
+        .status {
+            padding: 8px;
+            border-radius: 4px;
+            margin-top: 8px;
+            font-size: 13px;
+        }
+        .status.success {
+            background: #d4edda;
+            color: #155724;
+            border: 1px solid #c3e6cb;
+        }
+        .status.error {
+            background: #f8d7da;
+            color: #721c24;
+            border: 1px solid #f5c6cb;
+        }
+        .status.info {
+            background: #d1ecf1;
+            color: #0c5460;
+            border: 1px solid #bee5eb;
+        }
+        .small-text {
+            font-size: 12px;
+            color: #666;
+            margin-top: 4px;
+        }
+        .toggle-section {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            margin-bottom: 12px;
+        }
+        input[type="checkbox"] {
+            margin: 0;
+        }
     </style>
 </head>
 <body>
     <div class="header">LinkedIn Connect Exporter</div>
-    <p>Click connect buttons on LinkedIn to automatically log your connections!</p>
+    
+    <div class="section">
+        <div class="toggle-section">
+            <input type="checkbox" id="enableGoogleSheets">
+            <label for="enableGoogleSheets">Sync to Google Sheets</label>
+        </div>
+        <div class="small-text">Enable to automatically sync connections to Google Sheets instead of downloading files</div>
+    </div>
+
+    <div class="section" id="googleSheetsConfig" style="display: none;">
+        <div class="setting-group">
+            <label for="spreadsheetUrl">Google Sheets URL:</label>
+            <input type="url" id="spreadsheetUrl" placeholder="https://docs.google.com/spreadsheets/d/...">
+            <div class="small-text">Paste the URL of your Google Sheet</div>
+        </div>
+        
+        <div class="setting-group">
+            <label for="sheetName">Sheet Name (optional):</label>
+            <input type="text" id="sheetName" placeholder="LinkedIn Connections" value="LinkedIn Connections">
+            <div class="small-text">Name of the sheet tab to use</div>
+        </div>
+
+        <button id="authenticateBtn">Authenticate with Google</button>
+        <button id="testConnectionBtn" class="secondary">Test Connection</button>
+        
+        <div id="authStatus" class="status info" style="display: none;">
+            Click "Authenticate with Google" to connect your Google account
+        </div>
+    </div>
+
+    <div class="section">
+        <div class="setting-group">
+            <button id="downloadDataBtn" class="secondary">Download Current Data</button>
+            <div class="small-text">Download all stored connections as Excel file</div>
+        </div>
+    </div>
+
+    <div class="section">
+        <div id="connectionCount" class="small-text">Loading connection count...</div>
+    </div>
+
+    <script src="popup.js"></script>
 </body>
 </html>
