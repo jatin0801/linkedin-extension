@@ -1,4 +1,6 @@
-# LinkUp: LinkedIn Connect Exporter
+![LinkUp Logo](icons/icon128.png) 
+
+# LinkUp: LinkedIn Connect Exporter 
 
 **Version:** 1.0  
 **Description:** Export LinkedIn connections to Google Sheets  
